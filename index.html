@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f1218">
+<meta name="color-scheme" content="dark">
+<title>RydzzKen — Developer Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<script>
+document.documentElement.classList.add('js');
+/* Terapkan tema tersimpan sebelum paint, supaya tidak ada kedip */
+try{ if (localStorage.getItem('theme') === 'green') document.documentElement.dataset.theme = 'green'; }catch(e){}
+</script>
+<script>
+try{
+  if(!sessionStorage.getItem('splashed') && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.documentElement.classList.add('splash-on','splash-play');
+  }
+}catch(e){}
+</script>
+<style>
+:root{
+  --bg:#0f1218; --bg2:#1a1f2b; --accent:#e8d3a2; --accent2:#c9a45c; --gem:#c4455a;
+  --bg-rgb:15,18,24; --panel-rgb:18,21,29; --accent-rgb:232,211,162;
+  --glass:rgba(var(--bg-rgb),.62); --panel:rgba(var(--panel-rgb),.97);
+  --ease:.4s cubic-bezier(.4,0,.2,1);
+  --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --pad:clamp(1.25rem,4vw,3.5rem);
+}
+[data-theme="green"]{
+  --bg:#0b1a17; --bg2:#14302a; --accent:#b9e6d3; --accent2:#7fc4a8; --gem:#9fe0c5;
+  --bg-rgb:11,26,23; --panel-rgb:12,28,24; --accent-rgb:185,230,211;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);background:var(--bg);color:#fff;line-height:1.6;overflow-x:hidden;min-height:100vh}
+a{color:inherit;text-decoration:none}
+svg{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;display:block}
+svg.solid{fill:currentColor;stroke:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ===== Background ===== */
+.bg{position:fixed;inset:0;z-index:-2;overflow:hidden;background:radial-gradient(ellipse at 75% 30%,var(--bg2),var(--bg) 70%)}
+.bg-media{position:absolute;inset:0;transform:scale(1.05);transition:transform .2s ease-out;will-change:transform}
+.bg-img{position:absolute;inset:0;background-repeat:no-repeat;background-position:100% center;background-size:cover;transition:opacity .7s ease}
+.bg-gold{background-image:url('assets/frieren_default_theme.png')}
+.bg-green{background-image:url('assets/frieren_green_theme.png');opacity:0}
+[data-theme="green"] .bg-gold{opacity:0}
+[data-theme="green"] .bg-green{opacity:1}
+.bg-shade{position:absolute;inset:0;background:
+  radial-gradient(ellipse at 82% 18%,rgba(var(--accent-rgb),.14),transparent 55%),
+  radial-gradient(ellipse at 72% 40%,transparent 50%,rgba(var(--bg-rgb),.7) 100%),
+  linear-gradient(90deg,var(--bg) 0%,rgba(var(--bg-rgb),.6) 40%,transparent 70%)}
+.bg-dim{position:absolute;inset:0;background:var(--bg);opacity:0;transition:opacity .6s}
+body.dim .bg-dim{opacity:.8}
+.particles{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.particle{position:absolute;top:0;width:var(--s);height:var(--s);background:var(--accent);border-radius:50%;opacity:0;filter:blur(1px);animation:float var(--t) ease-in-out var(--d) infinite}
+@keyframes float{0%{transform:translate(0,100vh);opacity:0}10%{opacity:.4}90%{opacity:.3}100%{transform:translate(30px,-10vh);opacity:0}}
+
+/* ===== Header ===== */
+.top{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:flex-start;padding:max(1.5rem,env(safe-area-inset-top)) var(--pad) 0}
+.badge{width:44px;height:44px;border:1px solid var(--accent);display:grid;place-items:center;font:500 1.25rem var(--serif);color:var(--accent);transition:var(--ease)}
+.badge:hover{background:rgba(var(--accent-rgb),.1)}
+.top-right{display:flex;align-items:flex-start;gap:1.1rem}
+.star{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.05);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(var(--accent-rgb),.22);color:var(--accent);display:grid;place-items:center;font-size:1.15rem;cursor:pointer;transition:var(--ease)}
+.star:hover{box-shadow:0 0 16px rgba(var(--accent-rgb),.2)}
+
+/* ===== MUSIK: mulai ===== */
+.music{position:relative}
+
+/* Equalizer di dalam tombol */
+.music .ic-eq{display:none;align-items:flex-end;gap:3px;height:14px}
+.music .ic-eq i{width:3px;height:100%;background:currentColor;border-radius:2px;transform-origin:bottom;animation:eq 1s ease-in-out infinite}
+.music .ic-eq i:nth-child(2){animation-delay:-.4s}
+.music .ic-eq i:nth-child(3){animation-delay:-.7s}
+.music.playing{border-color:rgba(var(--accent-rgb),.55);box-shadow:0 0 16px rgba(var(--accent-rgb),.25)}
+.music.playing .ic-note{display:none}
+.music.playing .ic-eq{display:flex}
+@keyframes eq{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
+
+/* Gelombang: dua cincin terus memancar selama lagu main */
+.music::before,.music::after{content:'';position:absolute;inset:-1px;border-radius:50%;border:1px solid var(--accent);opacity:0;pointer-events:none}
+.music.playing::before{animation:wave 2.4s ease-out infinite}
+.music.playing::after{animation:wave 2.4s ease-out 1.2s infinite}
+@keyframes wave{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.9);opacity:0}}
+
+/* Gelombang sekali jalan setiap tombol diketuk */
+.music .ring{position:absolute;inset:-1px;border-radius:50%;border:2px solid var(--accent);pointer-events:none;animation:burst .6s ease-out forwards}
+@keyframes burst{from{transform:scale(1);opacity:.7}to{transform:scale(2.1);opacity:0}}
+
+@media (prefers-reduced-motion:reduce){
+  .music .ic-eq i{animation:none;transform:scaleY(.6)}
+  .music.playing::before,.music.playing::after{animation:none}
+  .music .ring{display:none}
+}
+/* ===== MUSIK: selesai ===== */
+
+/* ===== Toggle tema ===== */
+.theme{display:flex;gap:.1rem;padding:.2rem;height:44px;border-radius:999px;background:rgba(255,255,255,.05);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(var(--accent-rgb),.22)}
+.theme-opt{width:36px;border:0;border-radius:999px;background:transparent;color:rgba(255,255,255,.4);display:grid;place-items:center;cursor:pointer;transition:var(--ease)}
+.theme-opt svg{width:17px;height:17px}
+.theme-opt:hover{color:var(--accent)}
+.theme-opt[aria-pressed="true"]{background:rgba(var(--accent-rgb),.16);color:var(--accent);box-shadow:0 0 14px rgba(var(--accent-rgb),.16)}
+@media (prefers-reduced-motion:no-preference){
+  .theme-opt[aria-pressed="true"] svg{animation:pulse .4s ease}
+}
+@keyframes pulse{from{transform:scale(.8);opacity:.4}}
+
+/* ===== Home ===== */
+.home{position:relative;min-height:100vh;min-height:100svh;display:grid;grid-template-columns:minmax(0,1fr) clamp(320px,30vw,380px);gap:3rem;align-items:center;padding:7rem var(--pad)}
+.rise{opacity:0;animation:rise .8s ease-out var(--d,0s) forwards}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+/* ===== Splash ===== */
+.splash{display:none;position:fixed;inset:0;z-index:1000;cursor:pointer;--ln-w:clamp(120px,14vw,200px)}
+html.splash-on .splash{display:block}
+html.splash-on .rise{animation-delay:calc(var(--d,0s) + 2s)}
+html.splash-play body{overflow:hidden}
+.sp-top,.sp-bot{position:absolute;left:0;right:0;height:50%;background:var(--bg)}
+.sp-top{top:0;animation:sp-up .6s cubic-bezier(.7,0,.2,1) 1.8s forwards}
+.sp-bot{bottom:0;animation:sp-down .6s cubic-bezier(.7,0,.2,1) 1.8s forwards}
+.sp-stars{position:absolute;inset:0;opacity:0;animation:sp-fade-in .5s ease both,sp-fade-out .3s ease 1.7s forwards}
+.sp-stars i{position:absolute;width:var(--s);height:var(--s);border-radius:50%;background:var(--accent);animation:sp-tw var(--t) ease-in-out var(--d) infinite}
+.sp-ct{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(18px,1.8vw,26px);animation:sp-fade-out .3s ease 1.7s forwards}
+.sp-mw{position:relative;width:clamp(124px,14vw,200px);aspect-ratio:1;display:grid;place-items:center}
+.sp-moon{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(var(--accent-rgb),.4);background:rgba(var(--accent-rgb),.07);box-shadow:0 0 clamp(44px,5vw,70px) rgba(var(--accent-rgb),.22);opacity:0;animation:sp-moon .8s ease .1s both}
+.sp-badge{position:relative;width:clamp(64px,7vw,100px);aspect-ratio:1;display:grid;place-items:center}
+.sp-badge svg{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:var(--accent);stroke-width:1.2}
+.sp-badge rect{stroke-dasharray:1;stroke-dashoffset:1;animation:sp-draw .7s ease .3s both}
+.sp-badge span{font:500 clamp(30px,3.2vw,46px) var(--serif);color:var(--accent);opacity:0;animation:sp-fade-in .4s ease .75s both}
+.sp-name{font:500 clamp(26px,3vw,43px) var(--serif);color:var(--accent);white-space:nowrap;letter-spacing:.28em;padding-left:.28em;animation:sp-letters 1.3s ease .8s both}
+.sp-name b{font-weight:500;display:inline-block;opacity:0;animation:sp-fade-in .3s ease both;animation-delay:calc(.8s + var(--i)*.06s)}
+.sp-line{height:1px;width:0;background:var(--accent);animation:sp-line .5s ease 1s both}
+@keyframes sp-tw{0%,100%{opacity:.15}50%{opacity:.9}}
+@keyframes sp-fade-in{from{opacity:0}to{opacity:1}}
+@keyframes sp-fade-out{from{opacity:1}to{opacity:0}}
+@keyframes sp-moon{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
+@keyframes sp-draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes sp-letters{from{letter-spacing:.7em;padding-left:.7em}to{letter-spacing:.28em;padding-left:.28em}}
+@keyframes sp-line{from{width:0}to{width:var(--ln-w)}}
+@keyframes sp-up{to{transform:translateY(-100%)}}
+@keyframes sp-down{to{transform:translateY(100%)}}
+@media (prefers-reduced-motion:reduce){.splash{display:none!important}}
+
+.hero-line{display:flex;align-items:center;gap:.6rem;margin-bottom:1.5rem}
+.hero-line i{display:block;width:80px;height:1px;background:linear-gradient(90deg,var(--accent),transparent)}
+.hero-line b{width:7px;height:7px;border-radius:50%;background:var(--gem);box-shadow:0 0 10px var(--gem)}
+.hero-title{font:500 1rem/1.05 var(--serif)}
+.t-main{display:block;font-size:clamp(3.2rem,9vw,7rem);color:var(--accent);letter-spacing:.01em}
+.t-sub{display:block;min-height:1.15em;font-size:clamp(1.6rem,4vw,3rem);color:#fff;opacity:.88;letter-spacing:.06em;white-space:nowrap}
+.caret{display:inline-block;width:1px;height:.95em;margin-left:.08em;background:currentColor;vertical-align:-.08em;opacity:.7;animation:blink 1.05s steps(1) infinite}
+@keyframes blink{0%,49%{opacity:.7}50%,100%{opacity:0}}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+.hero-series{font-size:.8rem;letter-spacing:.5em;color:rgba(255,255,255,.5);margin:1.1rem 0 1.4rem}
+.hero-text{color:rgba(255,255,255,.68);max-width:420px;margin-bottom:2rem;font-size:.95rem;line-height:1.8}
+.btn{display:inline-flex;align-items:center;gap:.75rem;padding:.8rem .8rem .8rem 1.8rem;border-radius:999px;background:rgba(255,255,255,.03);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--accent2);color:var(--accent);font-size:.82rem;letter-spacing:.15em;transition:var(--ease)}
+.btn:hover{background:rgba(var(--accent-rgb),.08);box-shadow:0 0 24px rgba(var(--accent-rgb),.18);border-color:var(--accent)}
+.btn-arrow{display:grid;place-items:center;width:30px;height:30px;border:1px solid var(--accent);border-radius:50%;font-size:.9rem;transition:transform .3s ease}
+.btn:hover .btn-arrow{transform:translateX(4px)}
+.socials{display:flex;gap:.9rem;margin-top:2.2rem}
+.social{width:42px;height:42px;border-radius:50%;border:1px solid rgba(var(--accent-rgb),.28);color:var(--accent);display:grid;place-items:center;font-size:1.1rem;transition:var(--ease)}
+.social:hover{transform:translateY(-4px);border-color:var(--accent);background:rgba(var(--accent-rgb),.08)}
+
+/* ===== About card ===== */
+.about{align-self:end;background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(var(--accent-rgb),.16);border-radius:20px;padding:1.75rem}
+.about-label{text-align:center;color:var(--accent);font-size:.78rem;letter-spacing:.25em;margin-bottom:.9rem}
+.about-name{font:600 1.8rem/1.2 var(--serif)}
+.about-role{color:var(--accent2);font-size:.82rem;margin-bottom:1rem}
+.about-bio{font-size:.86rem;color:rgba(255,255,255,.62);line-height:1.7;margin-bottom:1.3rem}
+.feats{display:flex;flex-direction:column;gap:.6rem}
+.feat{display:flex;gap:.8rem;align-items:flex-start;padding:.7rem .8rem;background:rgba(255,255,255,.025);border:1px solid rgba(var(--accent-rgb),.1);border-radius:14px;transition:var(--ease)}
+.feat:hover{border-color:rgba(var(--accent-rgb),.28);background:rgba(var(--accent-rgb),.04)}
+.feat-ico{flex:none;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:rgba(var(--accent-rgb),.08);border:1px solid rgba(var(--accent-rgb),.2);color:var(--accent);font-size:1.1rem}
+.feat-t{font-size:.85rem;font-weight:500;line-height:1.3}
+.feat-d{font-size:.76rem;color:rgba(255,255,255,.55);line-height:1.5}
+
+/* ===== Gallery ===== */
+.projects{position:relative;padding:6rem var(--pad) 5rem;background:linear-gradient(to bottom,transparent,rgba(var(--bg-rgb),.9) 12rem)}
+.sec-head{text-align:center;margin-bottom:2.5rem}
+.sec-label{color:var(--accent);font-size:.78rem;letter-spacing:.25em;margin-bottom:.6rem}
+.sec-title{font:500 clamp(2rem,5vw,3rem)/1.15 var(--serif)}
+.sec-desc{color:rgba(255,255,255,.55);font-size:.9rem;margin-top:.5rem}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:1.25rem;max-width:760px;margin:0 auto}
+@media (min-width:760px){
+  .proj-grid>.proj:last-child:nth-child(odd){grid-column:1/-1;width:calc(50% - .625rem);justify-self:center}
+}
+.proj{display:flex;flex-direction:column;gap:1rem;padding:1.6rem;background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(var(--accent-rgb),.16);border-radius:20px;cursor:pointer}
+.proj:hover{border-color:rgba(var(--accent-rgb),.35);box-shadow:0 0 28px rgba(var(--accent-rgb),.08)}
+.proj-top{display:flex;justify-content:space-between;align-items:baseline;gap:.75rem;flex-wrap:wrap}
+.proj-name{font:600 1.7rem/1.2 var(--serif)}
+.proj-kind{font-size:.78rem;color:var(--accent2)}
+.proj-desc{font-size:.88rem;color:rgba(255,255,255,.65);line-height:1.7}
+.proj-term{font:.76rem/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--accent);background:rgba(0,0,0,.35);border:1px solid rgba(var(--accent-rgb),.12);border-radius:12px;padding:.8rem 1rem;overflow-x:auto;white-space:pre}
+.tags{display:flex;flex-wrap:wrap;gap:.45rem;list-style:none}
+.tags li{font-size:.74rem;padding:.2rem .7rem;border:1px solid rgba(var(--accent-rgb),.25);border-radius:999px;color:var(--accent)}
+.proj-links{display:flex;gap:1.2rem;margin-top:auto}
+.proj-links a,.proj-link{font-size:.85rem;color:var(--accent);border-bottom:1px solid rgba(var(--accent-rgb),.35);padding-bottom:1px;transition:var(--ease)}
+.proj-links a:hover,.proj-link:hover{border-color:var(--accent)}
+.proj>*{min-width:0}
+.proj-actions{display:flex;flex-wrap:wrap;align-items:center;gap:1.1rem;margin-top:auto}
+.proj-open{font:inherit;font-size:.82rem;letter-spacing:.08em;color:var(--accent);background:rgba(255,255,255,.03);border:1px solid var(--accent2);border-radius:999px;padding:.6rem 1.3rem;min-height:44px;cursor:pointer;transition:var(--ease)}
+.proj-open:hover{background:rgba(var(--accent-rgb),.08);box-shadow:0 0 20px rgba(var(--accent-rgb),.15);border-color:var(--accent)}
+
+/* ===== Contact ===== */
+.contact{position:relative;padding:4rem var(--pad) 9rem;text-align:center;background:rgba(var(--bg-rgb),.9)}
+.contact-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:.75rem;margin-top:1.6rem}
+.cbtn{display:inline-flex;align-items:center;gap:.6rem;min-height:46px;padding:0 1.4rem;border-radius:999px;font:inherit;font-size:.85rem;letter-spacing:.08em;cursor:pointer;transition:var(--ease)}
+.cbtn svg{width:16px;height:16px}
+.cbtn-main{background:rgba(255,255,255,.03);border:1px solid var(--accent2);color:var(--accent)}
+.cbtn-main:hover,.cbtn-main.ok{background:rgba(var(--accent-rgb),.1);border-color:var(--accent)}
+.cbtn-alt{background:transparent;border:1px solid rgba(var(--accent-rgb),.25);color:var(--accent)}
+.cbtn-alt:hover{border-color:var(--accent)}
+body.lock{overflow:hidden}
+.modal{border:none;background:transparent;color:#fff;padding:0;margin:auto;width:min(400px,calc(100vw - 3rem));max-width:none;max-height:none;overflow:visible}
+.modal::backdrop{background:rgba(4,5,8,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.modal[open]{animation:pop .3s ease}
+.modal[open]::backdrop{animation:fade .3s ease}
+@keyframes pop{from{opacity:0;transform:translateY(16px) scale(.98)}}
+@keyframes fade{from{opacity:0}}
+.modal-box{display:flex;flex-direction:column;aspect-ratio:3/4;max-height:calc(100vh - 3rem);max-height:calc(100svh - 3rem);background:var(--panel);border:1px solid rgba(var(--accent-rgb),.2);border-radius:22px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.6)}
+.modal-head{flex:none;display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.75rem .75rem .75rem 1.25rem;border-bottom:1px solid rgba(var(--accent-rgb),.12)}
+.modal-head .proj-name{font-size:1.35rem}
+.modal-close{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:1rem;color:var(--accent);background:rgba(255,255,255,.04);border:1px solid rgba(var(--accent-rgb),.25);cursor:pointer;transition:var(--ease)}
+.modal-close:hover{background:rgba(var(--accent-rgb),.15)}
+.modal-scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+.modal-preview{margin:1rem 1.25rem 0;border-radius:12px;overflow:hidden;background:#0b0f19;border:1px solid rgba(var(--accent-rgb),.15)}
+.modal-preview img{display:block;width:100%;height:auto}
+.modal-body{display:flex;flex-direction:column;gap:.9rem;padding:1.1rem 1.25rem 1.5rem;font-size:.82rem;color:rgba(255,255,255,.7);line-height:1.7}
+.modal-h{font:600 1.05rem/1.3 var(--serif);color:#fff;margin-top:.4rem}
+.m-list{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.m-list li{position:relative;padding-left:1.1rem}
+.m-list li::before{content:'✦';position:absolute;left:0;top:.4em;font-size:.6rem;color:var(--accent)}
+.modal code{font:.78rem ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--accent);background:rgba(0,0,0,.3);padding:.05rem .35rem;border-radius:6px}
+.modal .proj-term{margin:0}
+.foot{margin-top:3.5rem;text-align:center;font-size:.75rem;color:rgba(255,255,255,.35)}
+.js .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease var(--d,0s),transform .7s ease var(--d,0s)}
+.js .reveal.in{opacity:1;transform:none}
+
+/* ===== Nav melayang ===== */
+.nav{position:fixed;left:50%;bottom:max(1.25rem,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:100;display:flex;gap:2rem;padding:.65rem 1.6rem;background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(var(--accent-rgb),.14);border-radius:999px}
+.nav a{position:relative;font-size:.85rem;letter-spacing:.1em;color:rgba(255,255,255,.55);transition:var(--ease)}
+.nav a:hover,.nav a.active{color:var(--accent)}
+.nav a::after{content:'';position:absolute;left:0;right:0;bottom:-6px;height:1px;background:var(--accent);transform:scaleX(0);transition:transform .3s ease}
+.nav a.active::after{transform:scaleX(1)}
+
+/* ===== Laptop pendek ===== */
+@media (min-width:901px) and (max-height:800px){
+  .feat-d{display:none}
+  .about{padding:1.4rem 1.5rem}
+}
+
+/* ===== Tablet & mobile ===== */
+@media (max-width:900px){
+  .home{grid-template-columns:1fr;gap:2.5rem;align-items:start;align-content:start;padding-top:max(36vh,14rem);padding-bottom:7rem}
+  .bg-img{background-position:78% center}
+  .bg-shade{background:linear-gradient(to bottom,rgba(var(--bg-rgb),.4) 0%,transparent 18%,rgba(var(--bg-rgb),.7) 38%,rgba(var(--bg-rgb),.94) 62%,var(--bg) 100%)}
+  .about{align-self:auto;width:100%;max-width:460px;margin:0 auto;background:rgba(var(--bg-rgb),.8)}
+  .hero-text{max-width:480px}
+}
+@media (max-width:480px){
+  .t-main{font-size:clamp(3rem,16vw,4.2rem)}
+  .t-sub{font-size:clamp(1.4rem,7vw,2rem)}
+  .hero-series{letter-spacing:.35em}
+  .about{padding:1.4rem}
+  .nav{gap:1.5rem;padding:.55rem 1.3rem}
+  .projects{padding-top:4.5rem}
+  .top-right{gap:.6rem}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .modal[open],.modal[open]::backdrop{animation:none}
+  .caret{animation:none!important;opacity:.7}
+}
+</style>
+</head>
+<body>
+
+<div class="splash" id="splash" aria-hidden="true">
+  <div class="sp-top"></div><div class="sp-bot"></div>
+  <div class="sp-stars" id="spStars"></div>
+  <div class="sp-ct">
+    <div class="sp-mw">
+      <div class="sp-moon"></div>
+      <div class="sp-badge">
+        <svg viewBox="0 0 64 64"><rect pathLength="1" x="1" y="1" width="62" height="62"/></svg>
+        <span>R</span>
+      </div>
+    </div>
+    <div class="sp-name"><b style="--i:0">R</b><b style="--i:1">Y</b><b style="--i:2">D</b><b style="--i:3">Z</b><b style="--i:4">Z</b><b style="--i:5">K</b><b style="--i:6">E</b><b style="--i:7">N</b></div>
+    <div class="sp-line"></div>
+  </div>
+</div>
+
+<div class="bg" aria-hidden="true">
+  <div class="bg-media" id="bgImg">
+    <div class="bg-img bg-gold"></div>
+    <div class="bg-img bg-green"></div>
+  </div>
+  <div class="bg-shade"></div>
+  <div class="bg-dim"></div>
+</div>
+<div class="particles" id="particles" aria-hidden="true"></div>
+
+<section class="home" id="home">
+  <header class="top rise" style="--d:.1s">
+    <a href="#home" class="badge" aria-label="Kembali ke atas">R</a>
+    <div class="top-right">
+      <button class="star music" id="musicBtn" type="button" aria-label="Putar musik" aria-pressed="false" title="Putar musik">
+        <svg class="ic-note" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></svg>
+        <span class="ic-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
+      <div class="theme" role="group" aria-label="Pilih tema">
+        <button class="theme-opt" type="button" data-set="gold" aria-label="Tema gold" aria-pressed="true" title="Tema gold">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.6A8.5 8.5 0 0 1 9.4 4a8.5 8.5 0 1 0 10.6 10.6z"/></svg>
+        </button>
+        <button class="theme-opt" type="button" data-set="green" aria-label="Tema green" aria-pressed="false" title="Tema green">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="hero rise" style="--d:.3s">
+    <div class="hero-line"><i></i><b></b></div>
+    <h1 class="hero-title">
+      <span class="t-main">RYDZZKEN</span>
+      <span class="t-sub" aria-hidden="true"><span id="role">DEVELOPER</span><i class="caret"></i></span>
+      <span class="sr-only">Developer, UX/UI Designer, AI Agent Builder, Creative Coder</span>
+    </h1>
+    <p class="hero-series">PORTFOLIO</p>
+    <p class="hero-text">Membangun AI agent dan tool berbasis terminal dengan TypeScript. Lihat proyek yang sedang kukerjakan.</p>
+    <a href="#projects" class="btn">LIHAT PROYEK <span class="btn-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    <div class="socials">
+      <a href="https://github.com/RydzzKen" class="social" aria-label="GitHub" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M9 19c-4 1.5-4-2-6-2m12 4v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a>
+      <!-- GANTI alamat email -->
+      <a href="mailto:fyzzsatoru05@gmail.com" class="social" aria-label="Email"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+      <a href="https://github.com/RydzzKen/NeX-Agent" class="social" aria-label="Repo NeX-Agent" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M4 17l6-5-6-5M12 19h8"/></svg></a>
+    </div>
+  </div>
+
+  <aside class="about rise" style="--d:.5s">
+    <p class="about-label">✦ ABOUT ✦</p>
+    <h2 class="about-name">RydzzKen</h2>
+    <p class="about-role">Developer</p>
+    <p class="about-bio">Developer yang suka membangun alat untuk terminal dan AI agent, dengan perhatian pada arsitektur yang rapi, keamanan, dan pengalaman CLI yang nyaman.</p>
+    <div class="feats">
+      <div class="feat">
+        <div class="feat-ico"><svg viewBox="0 0 24 24"><path d="M12 2l2 7 7 3-7 3-2 7-2-7-7-3 7-3z"/></svg></div>
+        <div><h3 class="feat-t">TypeScript &amp; Node.js</h3><p class="feat-d">Membangun CLI dan tool dengan TypeScript strict.</p></div>
+      </div>
+      <div class="feat">
+        <div class="feat-ico"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <div><h3 class="feat-t">AI Agent</h3><p class="feat-d">Loop agentik, multi-provider, mode Plan dan Build.</p></div>
+      </div>
+      <div class="feat">
+        <div class="feat-ico"><svg viewBox="0 0 24 24"><path d="M6 3h12M6 21h12M7 3c0 5 5 6 5 9s-5 4-5 9M17 3c0 5-5 6-5 9s5 4 5 9"/></svg></div>
+        <div><h3 class="feat-t">Aman &amp; Teruji</h3><p class="feat-d">Batas workspace, konfirmasi aksi, dan tes dengan Vitest.</p></div>
+      </div>
+    </div>
+  </aside>
+</section>
+
+<section class="projects" id="projects">
+  <div class="sec-head reveal">
+    <p class="sec-label">✦ PROJECTS ✦</p>
+    <h2 class="sec-title">Proyek Pilihan</h2>
+    <p class="sec-desc">Proyek yang paling mewakili cara aku membangun.</p>
+  </div>
+  <!-- POLA PROYEK: salin seluruh blok <article class="proj reveal"> ... </article>,
+       tempel di dalam <div class="proj-grid">, lalu ganti teksnya. CSS dan JS tidak perlu diubah.
+       Mengetuk kartu otomatis membuka <dialog class="modal"> di dalam kartu itu. -->
+  <div class="proj-grid">
+    <!-- ===== SALIN BLOK INI ===== -->
+    <article class="proj reveal">
+      <div class="proj-top"><h3 class="proj-name">NeXTools</h3><span class="proj-kind">Web Tools Platform</span></div>
+      <p class="proj-desc">89 tool produktivitas cyber-futuristik dalam satu web app. Mayoritas berjalan 100% di browser — tanpa upload, tanpa riwayat.</p>
+      <ul class="tags"><li>Next.js</li><li>React 19</li><li>TypeScript</li><li>Tailwind CSS</li><li>CodeMirror</li></ul>
+      <div class="proj-actions">
+        <button class="proj-open" type="button">Lihat detail</button>
+        <a class="proj-link" href="https://nextools.rydzz.my.id" target="_blank" rel="noopener">Live</a>
+        <a class="proj-link" href="https://github.com/RydzzKen/NeXTools" target="_blank" rel="noopener">GitHub</a>
+      </div>
+
+      <dialog class="modal" aria-label="Detail proyek NeXTools">
+        <div class="modal-box">
+          <div class="modal-head"><h3 class="proj-name">NeXTools</h3><button class="modal-close" type="button" aria-label="Tutup"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+          <div class="modal-scroll">
+            <div class="modal-preview"><img data-banner="tools" src="assets/nex-tools-gold.svg" alt="Banner NeXTools dengan daftar tool di jendela browser" loading="lazy" onerror="this.parentNode.remove()"></div>
+            <div class="modal-body">
+              <p class="proj-kind">Web Tools Platform</p>
+              <ul class="tags"><li>Next.js 16</li><li>React 19</li><li>TypeScript</li><li>Tailwind CSS 4</li><li>CodeMirror</li><li>Vitest</li></ul>
+              <p>Kumpulan 89 utility tool harian di satu situs bertema neon: dari Word Counter, JSON Formatter, dan Hash Generator sampai QR Scanner, Video Downloader, dan HTML to APK. Dibangun dengan Next.js App Router dan TypeScript, dengan pendekatan client-side first: data yang kamu tempel tidak pernah meninggalkan perangkat.</p>
+
+              <h4 class="modal-h">Fitur</h4>
+              <ul class="m-list">
+                <li>89 tool dalam 6 kategori: Teks, Konversi, Developer, AI Tools, Playground, dan Utilitas</li>
+                <li>Client-side first untuk mayoritas tool — teks, JSON, hash, QR, dan gambar diproses di browser</li>
+                <li>Lima playground dengan runtime asli: HTML/CSS/JS, Python (Pyodide + matplotlib), TypeScript, SQLite (sql.js/WASM), dan JS console</li>
+                <li>Tool berbasis server milik sendiri: Video Downloader (<code>yt-dlp</code>), HTML to APK (toolchain Android), dan HTML to Video (Chromium + ffmpeg)</li>
+                <li>Tiga tool AI lewat Gemini dengan rotasi key dan model, kuota berlapis per cookie/IP/global, serta fallback template</li>
+                <li>Halaman tool di-SSG, sitemap dan robots dinamis, plus mode maintenance dua tingkat</li>
+                <li>1.500+ unit test Vitest untuk logika murni di <code>lib/</code></li>
+              </ul>
+
+              <h4 class="modal-h">Menjalankan</h4>
+              <p>Butuh Node.js 20+. Tool AI opsional dan hanya aktif setelah <code>GEMINI_API_KEY</code> diisi.</p>
+              <pre class="proj-term">npm install
+npm run dev     # http://localhost:3000</pre>
+              <pre class="proj-term">npm run build   # produksi (SSG)
+npm start
+npm test        # vitest</pre>
+
+              <h4 class="modal-h">Arsitektur</h4>
+              <pre class="proj-term">app/          halaman &amp; API route
+components/   UI + 89 komponen tool
+lib/          logika murni + registry tool
+tests/        unit test Vitest
+proxy.ts      gate maintenance</pre>
+
+              <div class="proj-links">
+                <a href="https://nextools.rydzz.my.id" target="_blank" rel="noopener">Buka NeXTools</a>
+                <a href="https://github.com/RydzzKen/NeXTools" target="_blank" rel="noopener">Lihat di GitHub</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </dialog>
+    </article>
+    <article class="proj reveal">
+      <div class="proj-top"><h3 class="proj-name">NeX-Agent</h3><span class="proj-kind">AI Agent CLI</span></div>
+      <p class="proj-desc">Agent berbasis terminal dengan loop agentik, mode Plan (read-only) dan Build, konfirmasi diff, checkpoint dan undo, serta arsitektur multi-provider.</p>
+      <ul class="tags"><li>TypeScript</li><li>Node.js</li><li>pnpm</li><li>Vitest</li></ul>
+      <div class="proj-actions">
+        <button class="proj-open" type="button">Lihat detail</button>
+        <a class="proj-link" href="https://nexagent.rydzz.my.id" target="_blank" rel="noopener">Live</a>
+        <a class="proj-link" href="https://github.com/RydzzKen/NeX-Agent" target="_blank" rel="noopener">GitHub</a>
+      </div>
+
+      <!-- Modul detail: muncul saat kartu diketuk -->
+      <dialog class="modal" aria-label="Detail proyek NeX-Agent">
+        <div class="modal-box">
+          <div class="modal-head"><h3 class="proj-name">NeX-Agent</h3><button class="modal-close" type="button" aria-label="Tutup"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+          <div class="modal-scroll">
+            <!-- Preview: simpan gambar di assets/ (SVG/PNG/JPG, rasio bebas) lalu sesuaikan src.
+                 Jika file tidak ditemukan, area preview otomatis disembunyikan. -->
+            <div class="modal-preview"><img data-banner="agent" src="assets/nex-agent-gold.svg" alt="Banner NeX-Agent dengan jendela terminal mode Plan" loading="lazy" onerror="this.parentNode.remove()"></div>
+            <div class="modal-body">
+              <p class="proj-kind">AI Agent CLI</p>
+              <ul class="tags"><li>TypeScript</li><li>Node.js</li><li>pnpm</li><li>Vitest</li></ul>
+              <p>Agent berbasis terminal dengan loop agentik, dua mode (Plan dan Build), soft workspace boundary, diff dengan konfirmasi, checkpoint dan undo, serta arsitektur multi-provider. Dibangun CLI-first dengan TypeScript strict.</p>
+
+              <h4 class="modal-h">Fitur</h4>
+              <ul class="m-list">
+                <li>Loop agentik dengan dua mode: <code>Plan</code> (read-only) dan <code>Build</code></li>
+                <li>Soft workspace boundary, diff dengan konfirmasi, serta checkpoint dan undo</li>
+                <li>Multi-provider: OpenAI-compatible dan Anthropic</li>
+                <li>Agent Skills lewat <code>SKILL.md</code>, daftar tugas live, dan render Markdown di terminal</li>
+                <li>File sensitif (<code>.env</code>, private key, kredensial) selalu minta konfirmasi, meski memakai <code>--allow-all</code></li>
+                <li>Mendukung Termux (Android)</li>
+              </ul>
+
+              <h4 class="modal-h">Instalasi</h4>
+              <p>Butuh Node.js 20+, pnpm, git, dan curl. Node dan pnpm dipasang otomatis bila belum ada.</p>
+              <pre class="proj-term">curl -fsSL https://raw.githubusercontent.com/RydzzKen/NeX-Agent/main/install.sh | bash
+source ~/.bashrc
+nex-agent</pre>
+              <p>Di Termux, jalankan <code>pkg install -y git</code> dulu. Tidak perlu <code>source ~/.bashrc</code>. Untuk instalasi manual dari checkout:</p>
+              <pre class="proj-term">pnpm install
+pnpm build
+bash install.sh</pre>
+
+              <h4 class="modal-h">Penggunaan</h4>
+              <pre class="proj-term">nex-agent "&lt;tujuan&gt;"
+nex-agent --mode plan "..."
+nex-agent --resume &lt;id&gt;
+nex-agent --continue
+nex-agent usage today</pre>
+              <p>Di mode chat tersedia slash command seperti <code>/connect</code>, <code>/models</code>, <code>/plan</code>, <code>/build</code>, <code>/undo</code>, dan <code>/skills</code>.</p>
+
+              <h4 class="modal-h">Arsitektur</h4>
+              <pre class="proj-term">src/
+  core/       loop agentik, approvals, checkpoint
+  providers/  adapter OpenAI-compatible, Anthropic
+  tools/      read_file, write_file, edit_file, run_shell
+  safety/     workspace, permissions, policy
+  cli/        renderer, prompt, slash command</pre>
+
+              <div class="proj-links">
+                <a href="https://nexagent.rydzz.my.id" target="_blank" rel="noopener">Buka NeX-Agent</a>
+                <a href="https://github.com/RydzzKen/NeX-Agent" target="_blank" rel="noopener">Lihat di GitHub</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </dialog>
+    </article>
+    <article class="proj reveal">
+      <div class="proj-top"><h3 class="proj-name">TeaScript</h3><span class="proj-kind">Bahasa Pemrograman</span></div>
+      <p class="proj-desc">Bahasa skrip kecil bergaya JavaScript/Python yang diimplementasikan murni di Python tanpa dependensi eksternal. Dibangun sebagai proyek belajar: lexer → parser → evaluator.</p>
+      <ul class="tags"><li>Python</li><li>Interpreter</li><li>REPL</li><li>Flask</li><li>MIT</li></ul>
+      <div class="proj-actions">
+        <button class="proj-open" type="button">Lihat detail</button>
+        <a class="proj-link" href="https://github.com/RydzzKen/TeaScript" target="_blank" rel="noopener">GitHub</a>
+      </div>
+
+      <dialog class="modal" aria-label="Detail proyek TeaScript">
+        <div class="modal-box">
+          <div class="modal-head"><h3 class="proj-name">TeaScript</h3><button class="modal-close" type="button" aria-label="Tutup"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+          <div class="modal-scroll">
+            <div class="modal-body">
+              <p class="proj-kind">Bahasa Pemrograman</p>
+              <ul class="tags"><li>Python</li><li>Interpreter</li><li>REPL</li><li>Flask</li><li>MIT</li></ul>
+              <p>TeaScript adalah bahasa skrip kecil bergaya JavaScript/Python yang diimplementasikan murni di Python tanpa dependensi eksternal. Proyek ini dibuat untuk mempelajari cara kerja sebuah bahasa pemrograman, dari lexer, parser, sampai evaluator, dengan REPL interaktif dan server web opsional di atas Flask.</p>
+
+              <h4 class="modal-h">Fitur</h4>
+              <ul class="m-list">
+                <li>Alur <code>lexer → parser</code> (recursive descent) <code>→ evaluator</code>, dengan error berposisi <code>baris:kolom</code> dan cuplikan baris sumber</li>
+                <li>Sintaks inti: <code>let</code>, <code>if / else if / else</code>, <code>while</code>, <code>for ... in</code>, <code>break</code>/<code>continue</code>, ternary <code>? :</code>, closure, dan parameter default</li>
+                <li><code>try { ... } catch e { ... }</code> menangkap error runtime TeaScript sekaligus exception Python dari <code>pyimport</code></li>
+                <li>String interpolasi <code>"${...}"</code>, method string, slicing, indeks negatif, serta operator <code>in</code>/<code>not in</code></li>
+                <li>Modul <code>import</code>/<code>from</code> dengan stdlib <code>math</code>, <code>text</code>, <code>collections</code>, <code>env</code>, plus <code>pyimport</code> untuk library Python apa pun</li>
+                <li><code>Web.app()</code> di atas Flask dan <code>tea-web</code> untuk playground/API; 27 fungsi bawaan, REPL interaktif, dan 216 test</li>
+              </ul>
+
+              <h4 class="modal-h">Menjalankan</h4>
+              <p>Butuh Python 3.8+. Tanpa dependensi wajib; Flask hanya diperlukan untuk fitur web (<code>tea-web</code>).</p>
+              <pre class="proj-term">pip install "teascript @ git+https://github.com/RydzzKen/TeaScript.git"
+tea tes.tea
+tea check tes.tea
+tea info
+tea</pre>
+
+              <h4 class="modal-h">Arsitektur</h4>
+              <pre class="proj-term">teascript/
+  lexer.py      teks → token (string, escape, interpolasi)
+  token.py      definisi token &amp; keyword
+  parser.py     token → AST (recursive descent)
+  ast_nodes.py  definisi node AST
+  evaluator.py  eksekusi AST + builtins + modul + web
+  errors.py     error ber-posisi
+  repl.py       REPL interaktif
+  web.py        server Flask (API + tea-web)
+  cli.py        argumen command line
+  modules/      stdlib: math, text, collections, env</pre>
+
+              <div class="proj-links"><a href="https://github.com/RydzzKen/TeaScript" target="_blank" rel="noopener">Lihat di GitHub</a></div>
+            </div>
+          </div>
+        </div>
+      </dialog>
+    </article>
+    <!-- ===== AKHIR BLOK ===== -->
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="sec-head reveal">
+    <p class="sec-label">✦ CONTACT ✦</p>
+    <h2 class="sec-title">Hubungi aku</h2>
+    <p class="sec-desc">Punya proyek, ide, atau sekadar mau menyapa? Kirim pesan lewat email atau GitHub.</p>
+  </div>
+  <div class="contact-actions reveal">
+    <button class="cbtn cbtn-main" id="copyEmail" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>
+      <span>Salin email</span>
+    </button>
+    <a class="cbtn cbtn-alt" href="https://github.com/RydzzKen" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4 1.5-4-2-6-2m12 4v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+      <span>GitHub</span>
+    </a>
+  </div>
+  <p class="foot">© RydzzKen. Tema terinspirasi Sousou no Frieren.</p>
+</section>
+
+<nav class="nav" aria-label="Navigasi utama">
+  <a href="#home" class="active">Home</a>
+  <a href="#projects">Projects</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<audio id="bgm" src="assets/lagu.mp3" loop preload="none"></audio>
+
+<script>
+(() => {
+  const root = document.documentElement;
+  const sp = document.getElementById('splash');
+  if (!sp || !root.classList.contains('splash-on')) { if (sp) sp.remove(); return; }
+
+  try { sessionStorage.setItem('splashed', '1'); } catch (e) {}
+
+  // Bintang
+  const box = document.getElementById('spStars');
+  const n = innerWidth < 700 ? 18 : 40;
+  const k = innerWidth >= 1000 ? 1.4 : 1;
+  for (let i = 0; i < n; i++) {
+    const d = document.createElement('i');
+    d.style.left = (Math.random() * 100) + '%';
+    d.style.top = (Math.random() * 100) + '%';
+    d.style.setProperty('--s', ((Math.random() * 2.2 + 1.2) * k) + 'px');
+    d.style.setProperty('--t', (Math.random() * 2 + 1.6) + 's');
+    d.style.setProperty('--d', (Math.random() * 2) + 's');
+    box.appendChild(d);
+  }
+
+  // Selesai alami: gerbang sudah terbuka, buang elemen dan buka scroll
+  const timer = setTimeout(() => {
+    root.classList.remove('splash-play');
+    sp.remove();
+  }, 2600);
+
+  // Lewati: ketuk di mana saja atau Escape
+  const skip = () => {
+    clearTimeout(timer);
+    root.classList.remove('splash-play', 'splash-on');
+    sp.remove();
+    removeEventListener('keydown', onKey);
+  };
+  const onKey = e => { if (e.key === 'Escape') skip(); };
+  sp.addEventListener('click', skip);
+  addEventListener('keydown', onKey);
+})();
+</script>
+
+<script>
+(() => {
+  const rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+  // Partikel (lebih sedikit di layar kecil)
+  const box = document.getElementById('particles');
+  if (!rm) {
+    const n = innerWidth < 700 ? 16 : 36;
+    for (let i = 0; i < n; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.setProperty('--s', (Math.random() * 4 + 1) + 'px');
+      p.style.setProperty('--t', (Math.random() * 12 + 8) + 's');
+      p.style.setProperty('--d', (Math.random() * 12) + 's');
+      p.style.left = (Math.random() * 100) + '%';
+      box.appendChild(p);
+    }
+  }
+
+  // Parallax kursor (hanya perangkat dengan mouse)
+  const bg = document.getElementById('bgImg');
+  if (!rm && fine) {
+    let busy = false;
+    addEventListener('mousemove', e => {
+      if (busy) return;
+      busy = true;
+      requestAnimationFrame(() => {
+        const x = (e.clientX / innerWidth - .5) * -24;
+        const y = (e.clientY / innerHeight - .5) * -24;
+        bg.style.transform = `translate(${x}px,${y}px) scale(1.06)`;
+        busy = false;
+      });
+    }, { passive: true });
+  }
+
+  // Gelapkan background saat scroll agar teks tetap terbaca
+  const dim = () => document.body.classList.toggle('dim', scrollY > innerHeight * .45);
+  addEventListener('scroll', dim, { passive: true });
+  dim();
+
+  // Nav aktif mengikuti section
+  const links = [...document.querySelectorAll('.nav a')];
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) links.forEach(l => l.classList.toggle('active', l.hash === '#' + e.target.id));
+  }), { rootMargin: '-45% 0px -45% 0px' });
+  document.querySelectorAll('section[id]').forEach(s => io.observe(s));
+
+  // Reveal galeri
+  const rv = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); rv.unobserve(e.target); }
+  }), { threshold: .15 });
+  document.querySelectorAll('.reveal').forEach(el => rv.observe(el));
+
+  // Modul detail proyek (dialog)
+  document.querySelectorAll('.proj').forEach(card => {
+    const dlg = card.querySelector('.modal');
+    if (!dlg) return;
+    card.addEventListener('click', e => {
+      if (e.target.closest('a, dialog')) return;
+      dlg.showModal();
+      document.body.classList.add('lock');
+    });
+    dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+    dlg.querySelector('.modal-close').addEventListener('click', () => dlg.close());
+    dlg.addEventListener('close', () => document.body.classList.remove('lock'));
+  });
+
+  // ===== MUSIK: mulai =====
+  const bgm = document.getElementById('bgm');
+  const musicBtn = document.getElementById('musicBtn');
+  bgm.volume = .35;
+  let resumeAfterHide = false;
+
+  const paintMusic = on => {
+    musicBtn.classList.toggle('playing', on);
+    musicBtn.setAttribute('aria-pressed', String(on));
+    const label = on ? 'Jeda musik' : 'Putar musik';
+    musicBtn.setAttribute('aria-label', label);
+    musicBtn.title = label;
+  };
+
+  // Cincin gelombang sekali jalan, dihapus otomatis setelah selesai
+  const burst = () => {
+    if (rm) return;
+    const r = document.createElement('span');
+    r.className = 'ring';
+    r.setAttribute('aria-hidden', 'true');
+    musicBtn.appendChild(r);
+    r.addEventListener('animationend', () => r.remove());
+  };
+
+  musicBtn.addEventListener('click', async () => {
+    burst();
+    if (bgm.paused) {
+      try { await bgm.play(); paintMusic(true); }
+      catch (e) { paintMusic(false); }   // file tidak ada / diblokir browser
+    } else {
+      bgm.pause();
+      paintMusic(false);
+    }
+  });
+
+  // Jeda otomatis saat tab disembunyikan, lanjut saat kembali
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      resumeAfterHide = !bgm.paused;
+      bgm.pause();
+    } else if (resumeAfterHide) {
+      bgm.play().catch(() => paintMusic(false));
+      resumeAfterHide = false;
+    }
+  });
+  bgm.addEventListener('pause', () => { if (!document.hidden) paintMusic(false); });
+  bgm.addEventListener('play', () => paintMusic(true));
+  // ===== MUSIK: selesai =====
+
+  // ===== Efek mengetik untuk role =====
+  const roleEl = document.getElementById('role');
+  if (roleEl && !rm) {
+    const ROLES = ['DEVELOPER', 'UX/UI DESIGNER', 'AI AGENT BUILDER', 'CREATIVE CODER'];
+    const TYPE = 75, DEL = 35, HOLD = 2500, GAP = 380;
+    let idx = 0, len = ROLES[0].length, deleting = true, timer;
+
+    const step = () => {
+      const word = ROLES[idx];
+      if (deleting) {
+        len--;
+        roleEl.textContent = word.slice(0, len);
+        if (len === 0) {
+          deleting = false;
+          idx = (idx + 1) % ROLES.length;
+          timer = setTimeout(step, GAP);
+        } else {
+          timer = setTimeout(step, DEL);
+        }
+      } else {
+        len++;
+        roleEl.textContent = word.slice(0, len);
+        if (len === word.length) {
+          deleting = true;
+          timer = setTimeout(step, HOLD);
+        } else {
+          timer = setTimeout(step, TYPE + Math.random() * 30);
+        }
+      }
+    };
+
+    // Teks awal tampil utuh dulu, baru mulai menghapus setelah HOLD
+    timer = setTimeout(step, HOLD);
+    // Jangan buang waktu saat tab tidak terlihat
+    document.addEventListener('visibilitychange', () => {
+      clearTimeout(timer);
+      if (!document.hidden) timer = setTimeout(step, 600);
+    });
+  }
+
+  // ===== Tema: gold (default) / green =====
+  const THEMES = {
+    gold:  { color:'#0f1218' },
+    green: { color:'#0b1a17' }
+  };
+  const BANNERS = {
+    agent: { gold:'assets/nex-agent-gold.svg', green:'assets/nex-agent-green.svg' },
+    tools: { gold:'assets/nex-tools-gold.svg', green:'assets/nex-tools-green.svg' }
+  };
+  const root = document.documentElement;
+  const meta = document.querySelector('meta[name="theme-color"]');
+  const banners = [...document.querySelectorAll('.modal-preview img[data-banner]')];
+  const themeBtns = [...document.querySelectorAll('.theme-opt')];
+
+  function paintTheme(name) {
+    const t = THEMES[name] ? name : 'gold';
+    root.dataset.theme = t;
+    if (meta) meta.content = THEMES[t].color;
+    banners.forEach(img => {
+      const set = BANNERS[img.dataset.banner];
+      if (set && img.getAttribute('src') !== set[t]) img.src = set[t];
+    });
+    themeBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.set === t)));
+  }
+
+  function setTheme(name) {
+    const t = THEMES[name] ? name : 'gold';
+    const commit = () => {
+      paintTheme(t);
+      try { localStorage.setItem('theme', t); } catch (e) {}
+    };
+    if (document.startViewTransition && !rm) document.startViewTransition(commit);
+    else commit();
+  }
+
+  paintTheme(root.dataset.theme || 'gold');
+  themeBtns.forEach(b => b.addEventListener('click', () => setTheme(b.dataset.set)));
+
+  // Salin email (alamat diambil dari link mailto yang sudah ada)
+  const copyBtn = document.getElementById('copyEmail');
+  if (copyBtn) {
+    const label = copyBtn.querySelector('span');
+    let t;
+    copyBtn.addEventListener('click', async () => {
+      // Cloudflare Email Protection memulihkan href mailto saat runtime,
+      // jadi link dicari saat tombol diketuk, bukan saat halaman dimuat.
+      const mail = document.querySelector('a[href^="mailto:"]');
+      if (!mail) return;
+      const email = mail.getAttribute('href').replace(/^mailto:/, '').split('?')[0];
+      try {
+        await navigator.clipboard.writeText(email);
+        clearTimeout(t);
+        copyBtn.classList.add('ok');
+        label.textContent = 'Tersalin';
+        t = setTimeout(() => { copyBtn.classList.remove('ok'); label.textContent = 'Salin email'; }, 2000);
+      } catch (e) {
+        location.href = mail.href;   // cadangan: buka aplikasi email
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>

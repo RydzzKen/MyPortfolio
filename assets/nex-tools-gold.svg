@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-label="NeXTools - 89 utility tools yang berjalan di browser">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f1218"/>
+      <stop offset="1" stop-color="#1a1f2b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e8d3a2"/>
+      <stop offset="1" stop-color="#c9a45c"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.85" cy="0.1" r="0.7">
+      <stop offset="0" stop-color="#c9a45c" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#c9a45c" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b2130"/>
+      <stop offset="1" stop-color="#131822"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="320" rx="20" fill="url(#bg)"/>
+  <rect width="1200" height="320" rx="20" fill="url(#glow)"/>
+
+  <!-- Logo: 2x2 grid -->
+  <g transform="translate(70,60)">
+    <rect width="120" height="120" rx="26" fill="#12151d" stroke="url(#accent)" stroke-width="4"/>
+    <rect x="28" y="28" width="28" height="28" rx="7" fill="url(#accent)"/>
+    <rect x="64" y="28" width="28" height="28" rx="7" fill="url(#accent)" opacity="0.62"/>
+    <rect x="28" y="64" width="28" height="28" rx="7" fill="url(#accent)" opacity="0.62"/>
+    <rect x="64" y="64" width="28" height="28" rx="7" fill="url(#accent)" opacity="0.34"/>
+  </g>
+
+  <!-- Judul -->
+  <text x="225" y="125" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="72" font-weight="800" fill="url(#accent)">NeXTools</text>
+  <text x="228" y="170" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" fill="#d9d4c8">89 utility tools, mayoritas jalan di browser</text>
+
+  <!-- Chip -->
+  <g font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#f1ede3">
+    <rect x="228" y="200" width="105" height="36" rx="18" fill="#222836" stroke="#4a4536"/>
+    <text x="280" y="223" text-anchor="middle">Next.js</text>
+    <rect x="345" y="200" width="118" height="36" rx="18" fill="#222836" stroke="#4a4536"/>
+    <text x="404" y="223" text-anchor="middle">React 19</text>
+    <rect x="475" y="200" width="130" height="36" rx="18" fill="#222836" stroke="#4a4536"/>
+    <text x="540" y="223" text-anchor="middle">TypeScript</text>
+    <rect x="617" y="200" width="142" height="36" rx="18" fill="#222836" stroke="#4a4536"/>
+    <text x="688" y="223" text-anchor="middle">CodeMirror</text>
+  </g>
+
+  <!-- Jendela browser -->
+  <g>
+    <rect x="770" y="45" width="380" height="230" rx="14" fill="#0a0c11" stroke="#3a3a30"/>
+    <circle cx="795" cy="68" r="6" fill="#e07a7a"/>
+    <circle cx="815" cy="68" r="6" fill="#e6c27a"/>
+    <circle cx="835" cy="68" r="6" fill="#c9a45c"/>
+    <rect x="860" y="56" width="270" height="24" rx="12" fill="#141a26" stroke="#2a2f3c"/>
+    <text x="874" y="73" font-family="'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace" font-size="12" fill="#8f897a">nextools.rydzz.my.id</text>
+    <line x1="770" y1="90" x2="1150" y2="90" stroke="#232833"/>
+
+    <g font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#d9d4c8">
+      <rect x="790" y="100" width="168" height="48" rx="10" fill="url(#tile)" stroke="#2a2f3c"/>
+      <circle cx="804" cy="124" r="3" fill="#c9a45c"/>
+      <text x="814" y="129">JSON Formatter</text>
+
+      <rect x="970" y="100" width="168" height="48" rx="10" fill="url(#tile)" stroke="#2a2f3c"/>
+      <circle cx="984" cy="124" r="3" fill="#c9a45c"/>
+      <text x="994" y="129">QR Code</text>
+
+      <rect x="790" y="156" width="168" height="48" rx="10" fill="url(#tile)" stroke="#2a2f3c"/>
+      <circle cx="804" cy="180" r="3" fill="#c9a45c"/>
+      <text x="814" y="185">Hash Generator</text>
+
+      <rect x="970" y="156" width="168" height="48" rx="10" fill="url(#tile)" stroke="#2a2f3c"/>
+      <circle cx="984" cy="180" r="3" fill="#c9a45c"/>
+      <text x="994" y="185">Base64</text>
+
+      <rect x="790" y="212" width="168" height="48" rx="10" fill="url(#tile)" stroke="#2a2f3c"/>
+      <circle cx="804" cy="236" r="3" fill="#c9a45c"/>
+      <text x="814" y="241">Regex Tester</text>
+
+      <rect x="970" y="212" width="168" height="48" rx="10" fill="url(#tile)" stroke="#2a2f3c"/>
+      <circle cx="984" cy="236" r="3" fill="#c9a45c"/>
+      <text x="994" y="241">SQL Playground</text>
+    </g>
+  </g>
+</svg>
